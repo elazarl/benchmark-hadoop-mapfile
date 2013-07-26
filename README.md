@@ -20,13 +20,13 @@ See [output for HBase](hbasebench.txt) and [output for MapFile](mapfilebench.txt
 
 [MapFile](http://hadoop.apache.org/docs/current/api/org/apache/hadoop/io/MapFile.html) is slower (by ~20%) than
 HBase's insertion rate, when HBase's client batches insertions, i.e.
-[`setAutoFlush`](http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/client/HTable.html#setAutoFlush(boolean))`(false)`.
+[`setAutoFlush`](http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/client/HTable.html#setAutoFlush%28boolean%29)`(false)`.
 
 With `setAutoFlush` on, HBase is very slow, it gives ~1% of the throughput.
 
 HBase guarantees rows will be synced to the disk after a successful `Put`.
 I'm not sure which guarantees does
-[`MapFile.Writer.append`](http://hadoop.apache.org/docs/stable/api/org/apache/hadoop/io/MapFile.Writer.html#append(org.apache.hadoop.io.WritableComparable, org.apache.hadoop.io.Writable))
+[`MapFile.Writer.append`](http://hadoop.apache.org/docs/stable/api/org/apache/hadoop/io/MapFile.Writer.html#append%28org.apache.hadoop.io.WritableComparable, org.apache.hadoop.io.Writable%29)
 gives you (will the data be written to a file at all? will the filesystem be `sync`'d with the new row).
 
 ### Lookup
