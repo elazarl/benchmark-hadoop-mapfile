@@ -1,0 +1,38 @@
+hadoop@172.25.98.50:~$ time java  -cp `hbase classpath`:benchmapfile/hbase/target/hbase-1.0-SNAPSHOT-jar-with-dependencies.jar -Dsun.net.spi.nameservice.provider.1=dns,echodns com.github.elazarl.hadoop.benchmark.mapfile.HBaseMain -n 1m -bucket 1000
+Getting admin 172.25.98.50,172.25.98.51,172.25.98.52
+file:/ghostcache/csi2/hbase/conf/hbase-site.xml
+Disabling benchmark_mapfile
+Deleting benchmark_mapfile
+Creating benchmark_mapfile
+Closing benchmark_mapfile
+Opening benchmark_mapfile
+Writing benchmark_mapfile
+Closing benchmark_mapfile
+Writing 1,000,000.00 took 8.056 s
+>>> Insertion: 124,146.49 op/sec
+Opening benchmark_mapfile
+Searching 10 times 1% (=10,000.00) took 1.574 s
+>>> Random Search: 63,572.79 op/sec
+
+real	0m15.441s
+user	0m6.361s
+sys	0m0.168s
+<dependencies.jar -Dsun.net.spi.nameservice.provider.1=dns,echodns com.github.elazarl.hadoop.benchmark.mapfile.HBaseMain -n 1m -bucket 1 2>/dev/null
+Getting admin 172.25.98.50,172.25.98.51,172.25.98.52
+file:/ghostcache/csi2/hbase/conf/hbase-site.xml
+Disabling benchmark_mapfile
+Deleting benchmark_mapfile
+Creating benchmark_mapfile
+Closing benchmark_mapfile
+Opening benchmark_mapfile
+Writing benchmark_mapfile
+Closing benchmark_mapfile
+Writing 1,000,000.00 took 8.209 s
+>>> Insertion: 121,817.52 op/sec
+Opening benchmark_mapfile
+Searching 10 times 1% (=10,000.00) took 23.95 s
+>>> Random Search: 4,175.02 op/sec
+
+real	0m37.981s
+user	0m15.065s
+sys	0m2.380s
