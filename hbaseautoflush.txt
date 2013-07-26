@@ -1,0 +1,17 @@
+<r -Dsun.net.spi.nameservice.provider.1=dns,echodns com.github.elazarl.hadoop.benchmark.mapfile.HBaseMain -autoflush -n 1m -bucket 1000
+Disabling benchmark_mapfile
+Deleting benchmark_mapfile
+Creating benchmark_mapfile
+Closing benchmark_mapfile
+Opening benchmark_mapfile
+Writing benchmark_mapfile
+Closing benchmark_mapfile
+Writing 1,000,000.00 took 612.8 s
+>>> Insertion: 1,631.76 op/sec
+Opening benchmark_mapfile
+Searching 10 times 1% (=10,000.00) took 2.718 s
+>>> Random Search: 36,791.76 op/sec
+
+real	10m21.368s
+user	1m16.508s
+sys	0m22.195s

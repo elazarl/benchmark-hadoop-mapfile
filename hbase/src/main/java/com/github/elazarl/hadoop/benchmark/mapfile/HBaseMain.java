@@ -32,6 +32,7 @@ public class HBaseMain {
     public static byte[] value;
     static long percent = 1;
     private static int iterations = 10;
+    private static boolean autoflush = false;
 
     public static double measureOpPerSec(Configuration conf, long n) throws IOException {
         final String tableName = "benchmark_mapfile";
@@ -72,9 +73,9 @@ public class HBaseMain {
         Options options = new Options();
         options.addOption(new Option("help", "display this text"));
         options.addOption(new Option("n", true, "number of lines"));
-        options.addOption(new Option("delete", true, "delete previous values"));
         options.addOption(new Option("bucket", true, "size of the bucket which will be sent to HBase"));
         options.addOption(new Option("iteration", true, "number of iterations on known values"));
+        options.addOption(new Option("autoflush", false, "should we use setAutoflush(off) on table"));
         CommandLineParser parser = new BasicParser();
         CommandLine cmd = parser.parse( options, args);
         if (cmd.hasOption("help")) {
@@ -86,6 +87,7 @@ public class HBaseMain {
             System.err.println("must choose number of lines (-n)");
             System.exit(2);
         }
+        autoflush = cmd.hasOption("autoflush");
         final String iterationStr = cmd.getOptionValue("iteration");
         if (iterationStr != null) {
             iterations = Integer.parseInt(iterationStr);
@@ -106,7 +108,7 @@ public class HBaseMain {
     private static void writeDataToTestTable(long n, String tableName, HTable hTable) throws IOException {
         System.out.println("Opening " + tableName);
         HTable table = hTable;
-        table.setAutoFlush(false);
+        table.setAutoFlush(autoflush);
         System.out.println("Writing " + tableName);
         Stopwatch stopwatch = new Stopwatch().start();
         GenerateToHbase.write(table, n);
