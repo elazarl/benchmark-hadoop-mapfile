@@ -34,28 +34,12 @@ public class HadoopMain  extends Configured implements Tool {
 
     @Override
     public int run(String[] args) throws Exception {
-        Options options = new Options();
-        options.addOption(new Option("help", "display this text"));
-        options.addOption(new Option("n", true, "number of lines"));
-        options.addOption(new Option("delete", true, "delete previous values"));
-        options.addOption(new Option("iteration", true, "number of iterations on known values"));
-        CommandLineParser parser = new BasicParser();
-        CommandLine cmd = parser.parse( options, args);
-        if (cmd.hasOption("help")) {
-            HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp( "ant", options );
-            return 1;
-        }
-        if (!cmd.hasOption("n")) {
-            System.err.println("must choose number of lines (-n)");
-            return 2;
-        }
+        CommandLine cmd = CmdUtils.parse(args);
         String iterationStr = cmd.getOptionValue("iteration");
         if (iterationStr != null) {
             iterations = Integer.parseInt(iterationStr);
         }
-        String nStr = cmd.getOptionValue("n");
-        long n = Pairs.shorthandDecimal(nStr);
+        long n = Pairs.shorthandDecimal(cmd.getOptionValue("n"));
         final FileSystem fs = FileSystem.newInstance(getConf());
         final Path mapfileDir = new Path("/test/mapfile");
         if (fs.exists(mapfileDir)) {

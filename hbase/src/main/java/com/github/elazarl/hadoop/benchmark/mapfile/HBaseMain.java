@@ -70,23 +70,10 @@ public class HBaseMain {
     }
 
     public static void main(String[] args) throws Exception {
-        Options options = new Options();
-        options.addOption(new Option("help", "display this text"));
-        options.addOption(new Option("n", true, "number of lines"));
-        options.addOption(new Option("bucket", true, "size of the bucket which will be sent to HBase"));
-        options.addOption(new Option("iteration", true, "number of iterations on known values"));
-        options.addOption(new Option("autoflush", false, "should we use setAutoflush(off) on table"));
-        CommandLineParser parser = new BasicParser();
-        CommandLine cmd = parser.parse( options, args);
-        if (cmd.hasOption("help")) {
-            HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp( "ant", options );
-            System.exit(1);
-        }
-        if (!cmd.hasOption("n")) {
-            System.err.println("must choose number of lines (-n)");
-            System.exit(2);
-        }
+        CommandLine cmd = CmdUtils.parse(args,
+                new Option("iteration", true, "number of iterations on known values"),
+                new Option("bucket", true, "size of the bucket which will be sent to HBase"),
+                new Option("autoflush", false, "should we use setAutoflush(off) on table"));
         autoflush = cmd.hasOption("autoflush");
         final String iterationStr = cmd.getOptionValue("iteration");
         if (iterationStr != null) {
