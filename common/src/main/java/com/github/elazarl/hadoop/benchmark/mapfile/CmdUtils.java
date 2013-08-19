@@ -36,4 +36,12 @@ public class CmdUtils {
         }
         return cmd;
     }
+
+    public static int iterations(CommandLine cmd) {
+        return Integer.parseInt(cmd.getOptionValue("iterations", "10"));
+    }
+
+    public static long getN(CommandLine cmd) {
+        return Pairs.shorthandDecimal(cmd.getOptionValue("n"));
+    }
 }

@@ -39,7 +39,7 @@ public class HadoopMain  extends Configured implements Tool {
         if (iterationStr != null) {
             iterations = Integer.parseInt(iterationStr);
         }
-        long n = Pairs.shorthandDecimal(cmd.getOptionValue("n"));
+        long n = CmdUtils.getN(cmd);
         final FileSystem fs = FileSystem.newInstance(getConf());
         final Path mapfileDir = new Path("/test/mapfile");
         if (fs.exists(mapfileDir)) {

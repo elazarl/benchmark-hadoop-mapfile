@@ -75,10 +75,7 @@ public class HBaseMain {
                 new Option("bucket", true, "size of the bucket which will be sent to HBase"),
                 new Option("autoflush", false, "should we use setAutoflush(off) on table"));
         autoflush = cmd.hasOption("autoflush");
-        final String iterationStr = cmd.getOptionValue("iteration");
-        if (iterationStr != null) {
-            iterations = Integer.parseInt(iterationStr);
-        }
+        iterations = CmdUtils.iterations(cmd);
         final String bucket = cmd.getOptionValue("bucket");
         if (bucket != null) {
             BUCKET_SIZE = Integer.parseInt(bucket);
@@ -87,7 +84,7 @@ public class HBaseMain {
         final Configuration conf = HBaseConfiguration.create();
         System.out.println("Getting admin " + conf.get("hbase.zookeeper.quorum"));
         System.out.println(conf.getResource("hbase-site.xml"));
-        measureOpPerSec(conf, Pairs.shorthandDecimal(cmd.getOptionValue("n")));
+        measureOpPerSec(conf, CmdUtils.getN(cmd));
     }
 
     static final DecimalFormat format = new DecimalFormat("#,###.00");

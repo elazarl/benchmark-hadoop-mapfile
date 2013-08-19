@@ -6,6 +6,8 @@ This repository contains a simple benchmark for comparing the throughput one wou
 using plain [MapFile](http://hadoop.apache.org/docs/current/api/org/apache/hadoop/io/MapFile.html)
 to the throughput one would get from a typical key-value distributed database.
 
+We also added testing capabilities for the HBase `StoreFile` format, but haven't finalize it yet.
+
 Obviously, using plain file will not be as fast by using a dedicated key-value service, but how slower
 would that be?  We compare the throughput of insertions and random lookup with insertions and random lookup to HBase.
 

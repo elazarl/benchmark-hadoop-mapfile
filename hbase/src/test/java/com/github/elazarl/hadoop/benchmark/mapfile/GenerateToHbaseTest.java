@@ -1,7 +1,5 @@
 package com.github.elazarl.hadoop.benchmark.mapfile;
 
-import com.github.elazarl.hadoop.benchmark.mapfile.GenerateToHbase;
-import com.github.elazarl.hadoop.benchmark.mapfile.Pairs;
 import junit.framework.Assert;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseTestingUtility;
@@ -15,6 +13,9 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Tests data genereation and retieval on a mini cluster.
@@ -40,6 +41,27 @@ public class GenerateToHbaseTest {
     public void testBenchmark() throws Exception {
         final double opSec = HBaseMain.measureOpPerSec(conf, 10000);
         Assert.assertTrue("operations on minicluster absurdly slow", opSec > 100);
+    }
+
+    public static final String HFILE_NAME_REGEX = "[0-9a-f]+(?:_SeqId_[0-9]+_)?";
+    private static final Pattern HFILE_NAME_PATTERN =
+            Pattern.compile("^(" + HFILE_NAME_REGEX + ")");
+    private static boolean isHFile(final String name) {
+        Matcher m = HFILE_NAME_PATTERN.matcher(name);
+        return m.matches() && m.groupCount() > 0;
+    }
+
+
+    @Test
+    public void testStorefileSchema() throws Exception {
+        Assert.assertTrue(HFILE_NAME_PATTERN.matcher("a_SeqId_0_").matches());
+        Assert.assertTrue(isHFile("a_SeqId_0_"));
+        Assert.assertTrue(isHFile("8f11e_SeqId_1_"));
+    }
+
+    @Test
+    public void testHFileBenchmark() throws Exception {
+        HFileMain.benchmark(conf, 10000, 10);
     }
 
     @Test
